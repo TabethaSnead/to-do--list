@@ -31,7 +31,7 @@ todoForm.addEventListener('submit', async (e) => {
     displayTodos();
 });
 
-async function displayTodos(todo) {
+async function displayTodos() {
     // clear the container (.textContent = '')
     todosEl.textContent = '';
     // fetch the user's todos from supabase
@@ -41,6 +41,10 @@ async function displayTodos(todo) {
     // loop through the user's todos
     for (let todo of todoDataArr) {
         const todosAdded = renderTodo(todo);
+        todosAdded.addEventListener('click', async () => {
+            await completeTodo(todo.id);
+            displayTodos();
+        });
         todosEl.append(todosAdded);
     }
     // for each todo, render a new todo DOM element using your render function
